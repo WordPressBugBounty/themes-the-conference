@@ -69,20 +69,25 @@ require get_template_directory() . '/inc/customizer-plugin-recommend/plugin-inst
 
 require get_template_directory() . '/inc/customizer-plugin-recommend/plugin-install/class-plugin-recommend.php';
 
-$config_customizer = array(
-	'recommended_plugins' => array(
-		//change the slug for respective plugin recomendation
-        'raratheme-companion' => array(
-			'recommended' => true,
-			'description' => sprintf(
-				/* translators: %s: plugin name */
-				esc_html__( 'If you want to take full advantage of the features this theme has to offer, please install and activate %s plugin.', 'the-conference' ), '<strong>RaraTheme Companion</strong>'
+if( ! function_exists( 'the_conference_customizer_notice_init' ) ) {
+	function the_conference_customizer_notice_init() {
+		$config_customizer = array(
+			'recommended_plugins' => array(
+				//change the slug for respective plugin recomendation
+				'raratheme-companion' => array(
+					'recommended' => true,
+					'description' => sprintf(
+						/* translators: %s: plugin name */
+						esc_html__( 'If you want to take full advantage of the features this theme has to offer, please install and activate %s plugin.', 'the-conference' ), '<strong>RaraTheme Companion</strong>'
+					),
+				),
 			),
-		),
-	),
-	'recommended_plugins_title' => esc_html__( 'Recommended Plugin', 'the-conference' ),
-	'install_button_label'      => esc_html__( 'Install and Activate', 'the-conference' ),
-	'activate_button_label'     => esc_html__( 'Activate', 'the-conference' ),
-	'deactivate_button_label'   => esc_html__( 'Deactivate', 'the-conference' ),
-);
-The_Conference_Customizer_Notice::init( apply_filters( 'the_conference_customizer_notice_array', $config_customizer ) );
+			'recommended_plugins_title' => esc_html__( 'Recommended Plugin', 'the-conference' ),
+			'install_button_label'      => esc_html__( 'Install and Activate', 'the-conference' ),
+			'activate_button_label'     => esc_html__( 'Activate', 'the-conference' ),
+			'deactivate_button_label'   => esc_html__( 'Deactivate', 'the-conference' ),
+		);
+		The_Conference_Customizer_Notice::init( apply_filters( 'the_conference_customizer_notice_array', $config_customizer ) );
+	}
+}
+add_action('init', 'the_conference_customizer_notice_init');

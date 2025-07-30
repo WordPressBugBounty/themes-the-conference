@@ -3,8 +3,8 @@
 Contributors: raratheme
 Requires at least: 6.2
 Requires PHP: 7.3
-Tested up to: 6.6
-Stable tag: 1.2.4
+Tested up to: 6.8
+Stable tag: 1.2.5
 License: GNU General Public License v3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Tags: one-column, two-columns, right-sidebar, left-sidebar, footer-widgets, custom-background, custom-header, custom-menu, custom-logo, featured-images, threaded-comments, full-width-template, rtl-language-support, translation-ready, theme-options, blog, e-commerce, portfolio
@@ -116,6 +116,9 @@ The Conference is a fully responsive and mobile-friendly free WordPress Theme de
 
 == Changelog ==
 
+	1.2.5 - 30-07-2025
+	* Fix: Translation loading early issue has been fixed.
+	
 	1.2.4 - 08-09-2024
     * Update: New dashboard has been implemented for better user experience.
 

@@ -28,36 +28,46 @@ function the_conference_add_sidebar_layout_box(){
 }
 add_action( 'add_meta_boxes', 'the_conference_add_sidebar_layout_box' );
 
-$the_conference_sidebar_layout = array(    
-    'default-sidebar'=> array(
-    	 'value'     => 'default-sidebar',
-    	 'label'     => __( 'Default Sidebar', 'the-conference' ),
-    	 'thumbnail' => get_template_directory_uri() . '/images/default-sidebar.png'
-   	),
-    'no-sidebar'     => array(
-    	 'value'     => 'no-sidebar',
-    	 'label'     => __( 'Full Width', 'the-conference' ),
-    	 'thumbnail' => get_template_directory_uri() . '/images/full-width.png'
-   	),  
-    'centered'     => array(
-    	 'value'     => 'centered',
-    	 'label'     => __( 'Full Width Centered', 'the-conference' ),
-    	 'thumbnail' => get_template_directory_uri() . '/images/full-width-centered.png'
-   	),
-    'left-sidebar' => array(
-         'value'     => 'left-sidebar',
-    	 'label'     => __( 'Left Sidebar', 'the-conference' ),
-    	 'thumbnail' => get_template_directory_uri() . '/images/left-sidebar.png'         
-    ),
-    'right-sidebar' => array(
-         'value'     => 'right-sidebar',
-    	 'label'     => __( 'Right Sidebar', 'the-conference' ),
-    	 'thumbnail' => get_template_directory_uri() . '/images/right-sidebar.png'         
-     )    
-);
+/**
+ * Get the sidebar layout options.
+ *
+ * @return array
+ */
+if( ! function_exists( 'the_conference_get_the_sidebar_layout' ) ) :
+    function the_conference_get_the_sidebar_layout(){
+        return array(
+            'default-sidebar'=> array(
+                'value'     => 'default-sidebar',
+                'label'     => __( 'Default Sidebar', 'the-conference' ),
+                'thumbnail' => get_template_directory_uri() . '/images/default-sidebar.png'
+            ),
+            'no-sidebar'     => array(
+                'value'     => 'no-sidebar',
+                'label'     => __( 'Full Width', 'the-conference' ),
+                'thumbnail' => get_template_directory_uri() . '/images/full-width.png'
+            ),  
+            'centered'     => array(
+                'value'     => 'centered',
+                'label'     => __( 'Full Width Centered', 'the-conference' ),
+                'thumbnail' => get_template_directory_uri() . '/images/full-width-centered.png'
+            ),
+            'left-sidebar' => array(
+                'value'     => 'left-sidebar',
+                'label'     => __( 'Left Sidebar', 'the-conference' ),
+                'thumbnail' => get_template_directory_uri() . '/images/left-sidebar.png'         
+            ),
+            'right-sidebar' => array(
+                'value'     => 'right-sidebar',
+                'label'     => __( 'Right Sidebar', 'the-conference' ),
+                'thumbnail' => get_template_directory_uri() . '/images/right-sidebar.png'         
+            )    
+        );
+    }
+endif;
 
 function the_conference_sidebar_layout_callback(){
-    global $post , $the_conference_sidebar_layout;
+    global $post;
+    $the_conference_sidebar_layout = the_conference_get_the_sidebar_layout();
     wp_nonce_field( basename( __FILE__ ), 'the_conference_nonce' );
     $sidebar  = get_post_meta( $post->ID, '_the_conference_sidebar', true ); ?>     
     <table class="form-table">
@@ -86,7 +96,8 @@ function the_conference_sidebar_layout_callback(){
 }
 
 function the_conference_save_sidebar_layout( $post_id ){
-    global $the_conference_sidebar_layout;
+    $the_conference_sidebar_layout = the_conference_get_the_sidebar_layout();
+
 
     // Verify the nonce before proceeding.
     if( !isset( $_POST[ 'the_conference_nonce' ] ) || !wp_verify_nonce( $_POST[ 'the_conference_nonce' ], basename( __FILE__ ) ) )
